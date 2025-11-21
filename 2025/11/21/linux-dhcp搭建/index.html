@@ -26,16 +26,17 @@
 <meta property="og:site_name" content="不待">
 <meta property="og:description" content="centos搭建dhcp服务前言dhcp是什么意思？ dhcp即动态主机设置协议，是一个局域网的网络协议，使用UDP协议工作。主要是给网络快速自动地分配IP地址，DHCP能够帮助我们将IP地址和相关IP信息分配给网络中计算机。 dhcp还可以给设备上配置正确的子网掩码，默认网关和DNS服务器信息。由于这些功能，现在几乎每台连接到网络的设备都配置了dhcp。 DHCP通常被应用在大型的局域网络环境中">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/02bf3d8fa5be3d7ed781d6132bd6153a.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/61e04e00344d2c05432251da803a881d.png">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/67a8623924af9726d4d24cdfe725c99f.png">
+<meta property="og:image" content="http://example.com/images/pasted-0.png">
+<meta property="og:image" content="http://example.com/images/pasted-2.png">
+<meta property="og:image" content="http://example.com/images/pasted-3.png">
+<meta property="og:image" content="http://example.com/images/pasted-4.png">
 <meta property="article:published_time" content="2025-11-21T11:53:00.000Z">
-<meta property="article:modified_time" content="2025-11-21T13:10:33.136Z">
+<meta property="article:modified_time" content="2025-11-21T13:31:21.919Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="云计算">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/02bf3d8fa5be3d7ed781d6132bd6153a.png">
+<meta name="twitter:image" content="http://example.com/images/pasted-0.png">
   
   
   
@@ -305,12 +306,17 @@
 <li><input disabled="" type="checkbox"> 节点：controller compute</li>
 <li><input disabled="" type="checkbox"> 网卡模式：net<br> 见图</li>
 </ul>
+<p><img src="/../images/pasted-0.png" srcset="/img/loading.gif" lazyload alt="图1"></p>
 <h1 id="下载dhcp服务"><a href="#下载dhcp服务" class="headerlink" title="下载dhcp服务"></a>下载dhcp服务</h1><h2 id="配置网卡"><a href="#配置网卡" class="headerlink" title="配置网卡"></a>配置网卡</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@controller ~]# ip a<br>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000<br>    <span class="hljs-built_in">link</span>/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00<br>    inet 127.0.0.1/8 scope host lo<br>       valid_lft forever preferred_lft forever<br>    inet6 ::1/128 scope host<br>       valid_lft forever preferred_lft forever<br>2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000<br>    <span class="hljs-built_in">link</span>/ether 00:0c:29:c9:be:62 brd ff:ff:ff:ff:ff:ff<br>    inet 192.168.10.11/24 brd 192.168.10.255 scope global dynamic ens33<br>       valid_lft 85476sec preferred_lft 85476sec<br>    inet6 fe80::20c:29ff:fec9:be62/64 scope <span class="hljs-built_in">link</span><br>       valid_lft forever preferred_lft forever<br>[root@controller ~]# <span class="hljs-built_in">cat</span> /etc/sysconfig/network-scripts/ifcfg-ens33<br>TYPE=<span class="hljs-string">&quot;Ethernet&quot;</span><br>PROXY_METHOD=<span class="hljs-string">&quot;none&quot;</span><br>BROWSER_ONLY=<span class="hljs-string">&quot;no&quot;</span><br>BOOTPROTO=<span class="hljs-string">&quot;dhcp&quot;</span><br>DEFROUTE=<span class="hljs-string">&quot;yes&quot;</span><br>IPV4_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span><br>IPV6INIT=<span class="hljs-string">&quot;yes&quot;</span><br>IPV6_AUTOCONF=<span class="hljs-string">&quot;yes&quot;</span><br>IPV6_DEFROUTE=<span class="hljs-string">&quot;yes&quot;</span><br>IPV6_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span><br>IPV6_ADDR_GEN_MODE=<span class="hljs-string">&quot;stable-privacy&quot;</span><br>NAME=<span class="hljs-string">&quot;ens33&quot;</span><br>UUID=<span class="hljs-string">&quot;f7c83436-f055-442c-9425-64a1209d659e&quot;</span><br>DEVICE=<span class="hljs-string">&quot;ens33&quot;</span><br>ONBOOT=<span class="hljs-string">&quot;yes&quot;</span><br>IPADDR=<span class="hljs-string">&quot;192.168.10.11&quot;</span>         <span class="hljs-comment">#固定ip</span><br>PREFIX=<span class="hljs-string">&quot;24&quot;</span>                    <span class="hljs-comment">#子网掩码24位</span><br>GATEWAY=<span class="hljs-string">&quot;192.168.10.2&quot;</span>         <span class="hljs-comment">#网关</span><br></code></pre></td></tr></table></figure>
 <p>网卡配置完成后我们直接下载服务</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@controller ~]# yum install dhcp -y<br></code></pre></td></tr></table></figure>
-<p>步骤没问题哦，如果你有报错会有两个原因<br>  1.有网环境：网卡配置出错，未能连接外网<br>  2.无外网环境：未配置本地yum源</p>
+<p>步骤没问题哦，如果你有报错会有两个原因</p>
+<pre><code class="hljs">  1.有网环境：网卡配置出错，未能连接外网
+
+  2.无外网环境：未配置本地yum源
+</code></pre>
 <ul>
-<li><input disabled="" type="checkbox"> 其实有没有网配置本地yum都可以下载（本来想找外链，想想质量分还是自己写吧）</li>
+<li>其实有没有网配置本地yum都可以下载（本来想找外链，想想质量分还是自己写吧）</li>
 </ul>
 <h2 id="配置本地yum源"><a href="#配置本地yum源" class="headerlink" title="配置本地yum源"></a>配置本地yum源</h2><p>先挂镜像</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@controller ~]# mount /dev/cdrom /mnt/  <span class="hljs-comment">#挂载镜像</span><br>mount: /dev/sr0 写保护，将以只读方式挂载<br>[root@controller ~]# <span class="hljs-built_in">mkdir</span> /opt/centos       <span class="hljs-comment">#创建一个文件夹</span><br>[root@controller ~]# <span class="hljs-built_in">cp</span> /mnt/* /opt/centos/  <span class="hljs-comment">#镜像内容复制到文件夹</span><br></code></pre></td></tr></table></figure>
@@ -323,15 +329,29 @@
 
 <h2 id="编辑文件"><a href="#编辑文件" class="headerlink" title="编辑文件"></a>编辑文件</h2><p>vim &#x2F;etc&#x2F;dhcp&#x2F;dhcpd.conf</p>
 <blockquote>
-<p>配置文件中你会看到许多这种<br>subnet 192.168.10.0 netmask 255.255.255.0{<br>}<br>这个是你要分配的子网，他跟你网卡的网段是一样的，如果你要分配两个或者多个子网的时候你需要有对应数量的网卡哦那么到时候配置文件就是这样的<br>subnet 192.168.10.0 netmask 255.255.255.0{<br>}<br>subnet 192.168.20.0 netmask 255.255.255.0{<br>}<br>subnet 192.168.30.0 netmask 255.255.255.0{<br>}<br>那么我这里仅作例子只写一个</p>
+<p>配置文件中你会看到许多这种</p>
 </blockquote>
+<pre><code class="hljs">subnet 192.168.10.0 netmask 255.255.255.0{
+}
+</code></pre>
+<p>这个是你要分配的子网，他跟你网卡的网段是一样的，如果你要分配两个或者多个子网的时候你需要有对应数量的网卡哦那么到时候配置文件就是这样的</p>
+<pre><code class="hljs">subnet 192.168.10.0 netmask 255.255.255.0{
+}
+subnet 192.168.20.0 netmask 255.255.255.0{
+}
+subnet 192.168.30.0 netmask 255.255.255.0{
+}
+</code></pre>
+<p>那么我这里仅作例子只写一个</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">subnet 192.168.10.0 netmask 255.255.255.0&#123;<br>  range 192.168.10.50 192.168.10.100;      <span class="hljs-comment">#子网范围</span><br>  option domain-name-servers 8.8.8.8;      <span class="hljs-comment">#dns</span><br>  option domain-name <span class="hljs-string">&quot;internal.example.org&quot;</span>;   <span class="hljs-comment">#域名</span><br>  option routers 192.168.10.2;             <span class="hljs-comment">#网关</span><br>  option broadcast-address 10.5.5.31;      <br>  default-lease-time 600;<br>  max-lease-time 7200;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>关于配置文件的解读呢，我偷了张图<a target="_blank" rel="noopener" href="https://blog.csdn.net/frank_ci/article/details/108758906">出处</a><br><img src="https://i-blog.csdnimg.cn/blog_migrate/02bf3d8fa5be3d7ed781d6132bd6153a.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"></p>
+<p>关于配置文件的解读呢，我偷了张图<a target="_blank" rel="noopener" href="https://blog.csdn.net/frank_ci/article/details/108758906">出处</a></p>
+<p><img src="/../images/pasted-2.png" srcset="/img/loading.gif" lazyload alt="图二"></p>
 <h2 id="开启服务"><a href="#开启服务" class="headerlink" title="开启服务"></a>开启服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@controller ~]# systemctl restart dhcpd<br>[root@controller ~]# systemctl <span class="hljs-built_in">enable</span> dhcpd<br>Created symlink from /etc/systemd/system/multi-user.target.wants/dhcpd.service to /usr/lib/systemd/system/dhcpd.service.<br></code></pre></td></tr></table></figure>
 
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>首先我们要将vmware的dhcp关掉<br><img src="https://i-blog.csdnimg.cn/blog_migrate/61e04e00344d2c05432251da803a881d.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>下面来到客户机也就是compute<br>没别的意思，打开dhcp就行了<br><strong>BOOTPROTO&#x3D;”dhcp”</strong>   </p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>首先我们要将vmware的dhcp关掉<br><img src="/../images/pasted-3.png" srcset="/img/loading.gif" lazyload alt="图三"><br>下面来到客户机也就是compute<br>没别的意思，打开dhcp就行了<br><strong>BOOTPROTO&#x3D;”dhcp”</strong>   </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@compute ~]# <span class="hljs-built_in">cat</span> /etc/sysconfig/network-scripts/ifcfg-ens33<br>TYPE=<span class="hljs-string">&quot;Ethernet&quot;</span><br>PROXY_METHOD=<span class="hljs-string">&quot;none&quot;</span><br>BROWSER_ONLY=<span class="hljs-string">&quot;no&quot;</span><br>BOOTPROTO=<span class="hljs-string">&quot;dhcp&quot;</span>    <br>DEFROUTE=<span class="hljs-string">&quot;yes&quot;</span><br>IPV4_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span><br>IPV6INIT=<span class="hljs-string">&quot;yes&quot;</span><br>IPV6_AUTOCONF=<span class="hljs-string">&quot;yes&quot;</span><br>IPV6_DEFROUTE=<span class="hljs-string">&quot;yes&quot;</span><br>IPV6_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span><br>IPV6_ADDR_GEN_MODE=<span class="hljs-string">&quot;stable-privacy&quot;</span><br>NAME=<span class="hljs-string">&quot;ens33&quot;</span><br>UUID=<span class="hljs-string">&quot;d5677465-8888-4277-abff-db622fefb6bd&quot;</span><br>DEVICE=<span class="hljs-string">&quot;ens33&quot;</span><br>ONBOOT=<span class="hljs-string">&quot;yes&quot;</span><br>IPV6_PRIVACY=<span class="hljs-string">&quot;no&quot;</span><br></code></pre></td></tr></table></figure>
-<p>然后重启网卡<br>再看ip<br><img src="https://i-blog.csdnimg.cn/blog_migrate/67a8623924af9726d4d24cdfe725c99f.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述"><br>ok啦</p>
+<p>然后重启网卡<br>再看ip</p>
+<p><img src="/../images/pasted-4.png" srcset="/img/loading.gif" lazyload alt="图四"><br>ok啦</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@compute ~]# ping 192.168.10.11<br>PING 192.168.10.11 (192.168.10.11) 56(84) bytes of data.<br>64 bytes from 192.168.10.11: icmp_seq=1 ttl=64 <span class="hljs-keyword">time</span>=0.364 ms<br>64 bytes from 192.168.10.11: icmp_seq=2 ttl=64 <span class="hljs-keyword">time</span>=0.488 ms<br>64 bytes from 192.168.10.11: icmp_seq=3 ttl=64 <span class="hljs-keyword">time</span>=0.527 ms<br>64 bytes from 192.168.10.11: icmp_seq=4 ttl=64 <span class="hljs-keyword">time</span>=0.354 ms<br>^C<br>--- 192.168.10.11 ping statistics ---<br>4 packets transmitted, 4 received, 0% packet loss, <span class="hljs-keyword">time</span> 3001ms<br>rtt min/avg/max/mdev = 0.354/0.433/0.527/0.077 ms<br>[root@compute ~]#<br></code></pre></td></tr></table></figure>
 
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>那就到这啦，请叫我不待，拜拜~</p>

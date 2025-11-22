@@ -7493,6 +7493,26 @@ body[data-type="link"] #page .page-title {
     padding: 0px 20px 0px;
   }
 }
+div#bannerGroup {
+  margin-right: 10px;
+  width: calc(51% - 10px) !important;
+}
+@media screen and (max-width: 768px) {
+  #home_top {
+    padding: 0px 15px;
+  }
+  #topPostGroup {
+    height: 280px;
+  }
+  #swiper_container_blog {
+    padding: 0 10px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  div#bannerGroup {
+    display: none !important;
+  }
+}
 #content-inner #recent-posts > .recent-post-item > .recent-post-info > .content {
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -10894,6 +10914,12 @@ h1.page-title + .tag-cloud-list {
   -ms-transition: 0.6s;
   transition: 0.6s;
   overflow: hidden;
+  -webkit-animation: header 5s linear forwards;
+  -moz-animation: header 5s linear forwards;
+  -o-animation: header 5s linear forwards;
+  -ms-animation: header 5s linear forwards;
+  animation: header 5s linear forwards;
+  animation-timeline: view();
   background-color: transparent;
 }
 #page-header.post-bg #nav {
@@ -14980,11 +15006,14 @@ blockquote {
 .share-link .share-main .share-main-all .reward-dec {
   font-size: 12px;
 }
-.post-tools .post-tools-left > div {
-  margin: 0;
-}
-.post-tools .post-tools-left {
-  width: auto;
+#post .tag_share {
+  margin-bottom: 2rem;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -o-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 .relatedPosts {
   margin-top: 1.25rem;
@@ -15097,7 +15126,7 @@ blockquote {
 .post-reward .reward-main {
   position: absolute;
   bottom: 40px;
-  left: -70%;
+  left: 0;
   z-index: 90;
   display: none;
   padding: 0px 0px 15px;

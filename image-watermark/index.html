@@ -1,0 +1,1719 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>图片文字添加工具 | 不待的技术栈 | 后端 &amp; AI &amp; 运维</title><meta name="keywords" content="后端开发,AI开发,DevOps,运维实战,Java,Python,机器学习,云原生,Linux,技术博客"><meta name="author" content="不待"><meta name="copyright" content="不待"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="图片文字添加工具"><meta name="application-name" content="图片文字添加工具"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="website"><meta property="og:title" content="图片文字添加工具"><meta property="og:url" content="http://example.com/image-watermark/index.html"><meta property="og:site_name" content="不待的技术栈 | 后端 &amp; AI &amp; 运维"><meta property="og:description" content="文字设置       点击选择图片或拖拽到此区域 支持 JPG、PNG、GIF 格式，最大 10MB          文字内容  不待的技术栈 - 专注分享优质内容      文字位置   顶部居中 居中 底部居中 左上角 右上角 左下角 右下角 自定义位置        文字"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="http://example.com/img/default_cover.jpg"><meta property="article:author" content="不待"><meta property="article:tag" content="后端开发,AI开发,DevOps,运维实战,Java,Python,机器学习,云原生,Linux,技术博客"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/img/default_cover.jpg"><meta name="description" content="文字设置       点击选择图片或拖拽到此区域 支持 JPG、PNG、GIF 格式，最大 10MB          文字内容  不待的技术栈 - 专注分享优质内容      文字位置   顶部居中 居中 底部居中 左上角 右上角 左下角 右下角 自定义位置        文字"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/image-watermark/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: {"enable":true,"title":"与数百名博主无限进步","addFriendPlaceholder":"昵称（请勿包含博客等字样）：\n网站地址（要求博客地址，请勿提交个人主页）：\n头像图片url（请提供尽可能清晰的图片，我会上传到我自己的图床）：\n描述：\n站点截图（可选）：\n"},
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"budai","mode":"tianli","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"S-0H7EQK3R0PLB4S69","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"不再看看吗？","backTitle":"欢迎来看我的博客鸭~"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: 'http://115.190.196.142:8080/',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":2},
+  friends_vue_info: {"apiurl":"https://friends.anheyu.com/"},
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: 不待","link":"链接: ","source":"来源: 不待的技术栈 | 后端 & AI & 运维","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: {"enable":true,"delay":100,"shiftDelay":200},
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '不待的技术栈 | 后端 & AI & 运维',
+  title: '图片文字添加工具',
+  postAI: '',
+  pageFillDescription: ' 文字设置, 点击选择图片或拖拽到此区域,  图床配置,  实时预览,  上传成功！文字设置点击选择图片或拖拽到此区域支持格式最大文字内容不待的技术栈专注分享优质内容文字位置顶部居中居中底部居中左上角右上角左下角右下角自定义位置文字颜色透明度字体大小旋转角度字体样式无衬线衬线微软雅黑黑体宋体楷体行楷舒体字体粗细正常粗体加粗细体文字阴影无阴影黑色阴影白色光晕强阴影背景颜色选择透明背景可去除背景色背景透明度图床配置已配置已配置已固定配置无需手动输入端点实时预览图片预览区域上传图片后这里会显示添加文字后的效果应用文字下载图片上传图床重置上传成功图片已成功添加文字并上传到图床图片复制链接处理新图片正在上传图片请稍候配置样式预览区域样式按钮样式结果区域样式加载动画响应式调整图片文字添加工具脚本开始加载固定配置元素文字控制元素全局变量固定已设置事件监听器加载完成开始设置事件监听器上传区域事件点击上传区域拖拽功能拖拽文件文件输入变化选择文件文字控制事件按钮事件点击应用文字按钮事件监听器设置完成处理图片上传处理图片上传请上传图片文件图片大小不能超过文件读取完成图片加载完成尺寸显示预览图片启用应用按钮禁用其他按钮图片显示完成应用按钮已启用图片加载失败图片加载失败请重试文件读取失败文件读取失败应用文字到图片开始应用文字到图片请先上传图片系统错误画布元素未找到设置尺寸与图片相同尺寸设置清除画布绘制原始图片原始图片已绘制到安全获取参数值请输入文字内容文字参数设置文字样式重置阴影设置文字阴影计算文字位置根据位置计算坐标绘制背景如果有绘制圆角矩形背景恢复文字透明度绘制文字显示隐藏原图保存处理后的图片数据文字添加完成图片生成成功启用下载和上传按钮下载和上传按钮已启用生成失败生成图片失败下载图片开始下载图片请先应用文字图片下载完成下载失败下载失败请重试上传到图床开始上传到图床请先应用文字显示加载指示器将转换为将转换为创建发送上传请求到发送上传请求上传响应状态上传错误响应根据状态码提供更具体的错误信息无效或已过期请检查权限不足请联系管理员请求过于频繁请稍后重试上传失败上传响应数据显示结果未找到如果是有效的添加链接平滑滚动到结果区域上传成功显示结果上传失败服务器返回错误状态上传错误上传失败隐藏加载指示器复制图片复制图片没有可复制的复制成功临时更改按钮文本已复制复制失败复制失败请手动复制链接重置工具重置工具重置表单值不待的技术栈专注分享优质内容更新显示值工具重置完成如果已应用文字更新文字检测到文字已应用更新文字错误处理全局错误错误位置未处理的拒绝未处理的拒绝图片文字添加工具脚本加载完成调试函数没有图片无法测试调试函数已加载使用进行调试使用说明上传图片并设置文字参数点击应用文字预览效果可选择下载图片或上传到图床已固定配置无需手动输入功能特性支持多种字体和样式文字阴影和背景效果多种位置选择实时预览效果一键上传到图床',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-23 21:50:14',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 8.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.budai.fun/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="http://115.190.196.142/upload" title="不待图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/i/2025/11/23/6922b0babf50b.jpg" alt="不待图床"/><span class="back-menu-item-text">不待图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">不待的技术栈 | 后端 &amp; AI &amp; 运维</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友情链接</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 工具</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/image-watermark/"><i class="anzhiyufont anzhiyu-icon-image faa-tada" style="font-size: 0.9em;"></i><span> 图片水印</span></a></li></ul></div></div></div><div id="nav-right"><div id="nav-naoDark"><div class="container"><div class="components"><div class="main-button"><div class="moon"></div><div class="moon"></div><div class="moon"></div></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="cloud"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="cloud-light"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="stars"><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div></div></div></div></div><div class="nav-button only-home" id="travellings_button" title="随机前往一个开往项目网站"><a class="site-page" onclick="anzhiyu.totraveling()" title="随机前往一个开往项目网站" href="javascript:void(0);" rel="external nofollow" data-pjax-state="external"><i class="anzhiyufont anzhiyu-icon-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="http://115.190.196.142/images/2025/11/22/_20251122174144_203_171.jpg" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/images/2025/11/22/_20251122174144_203_171.jpg"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="http://115.190.196.142/images/2025/11/22/_20251122174129_202_171.jpg" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/images/2025/11/22/_20251122174129_202_171.jpg"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/httpd/" style="font-size: 1.05rem;">httpd<sup>1</sup></a><a href="/tags/linux/" style="font-size: 1.05rem;">linux<sup>5</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>1</sup></a><a href="/tags/requests/" style="font-size: 1.05rem;">requests<sup>1</sup></a><a href="/tags/vpn/" style="font-size: 1.05rem;">vpn<sup>1</sup></a><a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" style="font-size: 1.05rem;">云计算<sup>4</sup></a><a href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/" style="font-size: 1.05rem;">公有云<sup>3</sup></a><a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.05rem;">爬虫<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/11/"><span class="card-archive-list-date">十一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div><div class="console-btn-item" id="consoleKeyboard" onclick="anzhiyu.keyboardToggle()" title="快捷键开关"><a class="keyboard-switch"><i class="anzhiyufont anzhiyu-icon-keyboard"></i></a></div><div id="console-naoDark"><div class="container"><div class="components"><div class="main-button"><div class="moon"></div><div class="moon"></div><div class="moon"></div></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="cloud"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="cloud-light"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="stars"><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div></div></div></div></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="layout" id="content-inner"><div id="page"><h1 class="page-title">图片文字添加工具</h1><div id="article-container"><div class="watermark-tool-container">
+<!-- 工具头部 -->
+
+
+<!-- 主要内容区域 -->
+<div class="tool-main">
+<!-- 左侧：上传和设置区域 -->
+<div class="tool-section upload-section">
+<div class="section-header">
+<h2><i class="fas fa-cog"></i> 文字设置</h2>
+</div>
+
+<!-- 上传区域 -->
+<div class="upload-area" id="uploadArea">
+<div class="upload-content">
+<i class="fas fa-cloud-upload-alt"></i>
+<h3>点击选择图片或拖拽到此区域</h3>
+<p>支持 JPG、PNG、GIF 格式，最大 10MB</p>
+</div>
+<input type="file" id="imageInput" accept="image/*" class="file-input">
+</div>
+
+<!-- 文字设置面板 -->
+<div class="settings-panel">
+<div class="setting-group">
+<label for="textContent">
+<i class="fas fa-font"></i> 文字内容
+</label>
+<textarea id="textContent" placeholder="输入要添加的文字内容" rows="3">不待的技术栈 - 专注分享优质内容</textarea>
+</div>
+
+<div class="setting-group">
+<label for="textPosition">
+<i class="fas fa-arrows-alt"></i> 文字位置
+</label>
+<select id="textPosition">
+<option value="top">顶部居中</option>
+<option value="center">居中</option>
+<option value="bottom" selected>底部居中</option>
+<option value="top-left">左上角</option>
+<option value="top-right">右上角</option>
+<option value="bottom-left">左下角</option>
+<option value="bottom-right">右下角</option>
+<option value="custom">自定义位置</option>
+</select>
+</div>
+
+<div class="setting-row">
+<div class="setting-group">
+<label for="textColor">
+<i class="fas fa-palette"></i> 文字颜色
+</label>
+<input type="color" id="textColor" value="#ffffff">
+</div>
+
+<div class="setting-group">
+<label for="textOpacity">
+<i class="fas fa-adjust"></i> 透明度
+</label>
+<input type="range" id="textOpacity" min="0.1" max="1" step="0.1" value="0.9">
+<span class="value-display" id="opacityValue">90%</span>
+</div>
+</div>
+
+<div class="setting-row">
+<div class="setting-group">
+<label for="textSize">
+<i class="fas fa-text-height"></i> 字体大小
+</label>
+<input type="range" id="textSize" min="20" max="120" value="48">
+<span class="value-display" id="sizeValue">48px</span>
+</div>
+
+<div class="setting-group">
+<label for="textAngle">
+<i class="fas fa-redo"></i> 旋转角度
+</label>
+<input type="range" id="textAngle" min="0" max="360" value="0">
+<span class="value-display" id="angleValue">0°</span>
+</div>
+</div>
+
+<div class="setting-group">
+<label for="fontFamily">
+<i class="fas fa-font"></i> 字体样式
+</label>
+<select id="fontFamily">
+<option value="Arial, sans-serif">Arial (无衬线)</option>
+<option value="'Times New Roman', serif">Times New Roman (衬线)</option>
+<option value="'Microsoft YaHei', sans-serif">微软雅黑</option>
+<option value="'SimHei', sans-serif">黑体</option>
+<option value="'SimSun', serif">宋体</option>
+<option value="'KaiTi', serif">楷体</option>
+<option value="'STXingkai', serif">行楷</option>
+<option value="'FZShuTi', serif">舒体</option>
+</select>
+</div>
+
+<div class="setting-group">
+<label for="fontWeight">
+<i class="fas fa-bold"></i> 字体粗细
+</label>
+<select id="fontWeight">
+<option value="normal">正常</option>
+<option value="bold" selected>粗体</option>
+<option value="bolder">加粗</option>
+<option value="lighter">细体</option>
+</select>
+</div>
+
+<div class="setting-group">
+<label for="textShadow">
+<i class="fas fa-shadow"></i> 文字阴影
+</label>
+<select id="textShadow">
+<option value="none">无阴影</option>
+<option value="2px 2px 4px rgba(0,0,0,0.5)" selected>黑色阴影</option>
+<option value="0 0 10px rgba(255,255,255,0.8)">白色光晕</option>
+<option value="2px 2px 8px rgba(0,0,0,0.8)">强阴影</option>
+</select>
+</div>
+
+<div class="setting-group">
+<label for="backgroundColor">
+<i class="fas fa-fill"></i> 背景颜色
+</label>
+<input type="color" id="backgroundColor" value="transparent">
+<small>选择透明背景可去除背景色</small>
+</div>
+
+<div class="setting-group">
+<label for="backgroundOpacity">
+<i class="fas fa-layer-group"></i> 背景透明度
+</label>
+<input type="range" id="backgroundOpacity" min="0" max="1" step="0.1" value="0">
+<span class="value-display" id="bgOpacityValue">0%</span>
+</div>
+
+<!-- 固定的Token配置 -->
+<div class="api-config-section">
+<div class="section-header">
+<h2><i class="fas fa-key"></i> 图床配置</h2>
+</div>
+
+<div class="setting-group">
+<label>
+<i class="fas fa-key"></i> API Token (已配置)
+</label>
+<div class="token-display">
+<code>1|mkePuCqsOmJBr9e7ZiBRZV5Oai65GsrShiBZ4AYs</code>
+<span class="token-status-badge success">已配置</span>
+</div>
+<small>Token已固定配置，无需手动输入</small>
+</div>
+
+<div class="setting-group">
+<label for="apiEndpoint">
+<i class="fas fa-server"></i> API 端点
+</label>
+<input type="text" id="apiEndpoint" value="http://115.190.196.142/api/v1/upload" readonly>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 右侧：预览和操作区域 -->
+<div class="tool-section preview-section">
+<div class="section-header">
+<h2><i class="fas fa-eye"></i> 实时预览</h2>
+</div>
+
+<div class="preview-container">
+<div class="preview-placeholder" id="previewPlaceholder">
+<i class="fas fa-image"></i>
+<p>图片预览区域</p>
+<p>上传图片后这里会显示添加文字后的效果</p>
+</div>
+
+<p><canvas id="textCanvas" class="text-canvas"></canvas></p>
+</div>
+
+<!-- 操作按钮 -->
+<div class="action-buttons">
+<button class="btn btn-primary" id="applyText" disabled>
+<i class="fas fa-text-height"></i> 应用文字
+</button>
+<button class="btn btn-success" id="downloadImage" disabled>
+<i class="fas fa-download"></i> 下载图片
+</button>
+<button class="btn btn-info" id="uploadImage" disabled>
+<i class="fas fa-cloud-upload-alt"></i> 上传图床
+</button>
+<button class="btn btn-secondary" id="resetTool">
+<i class="fas fa-redo"></i> 重置
+</button>
+</div>
+
+<!-- 结果展示 -->
+<div class="result-section" id="resultSection">
+<div class="result-content">
+<h3><i class="fas fa-check-circle"></i> 上传成功！</h3>
+<p>图片已成功添加文字并上传到图床</p>
+<div class="image-url-container">
+<label>图片URL：</label>
+<div class="image-url" id="imageUrl"></div>
+</div>
+</div>
+<div class="result-actions">
+<button class="btn btn-secondary" id="copyUrl">
+<i class="fas fa-copy"></i> 复制链接
+</button>
+<button class="btn btn-outline" id="newImage">
+<i class="fas fa-plus"></i> 处理新图片
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 加载指示器 -->
+<div class="loading" id="loadingIndicator">
+<div class="spinner"></div>
+<p>正在上传图片，请稍候...</p>
+</div>
+</div>
+
+<style>
+:root {
+    --primary-color: var(--anzhiyu-theme);
+    --secondary-color: var(--anzhiyu-hovertext);
+    --background: var(--anzhiyu-background);
+    --card-bg: var(--anzhiyu-card-bg);
+    --card-border: var(--anzhiyu-card-border);
+    --font-color: var(--anzhiyu-fontcolor);
+    --success-color: #10b981;
+    --info-color: #3b82f6;
+    --warning-color: #f59e0b;
+    --error-color: #ef4444;
+    --border-radius: 8px;
+}
+
+.watermark-tool-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 15px;
+    color: white;
+}
+
+.tool-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.tool-header p {
+    opacity: 0.9;
+    font-size: 1.1em;
+}
+
+.tool-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 968px) {
+    .tool-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+.tool-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 25px;
+}
+
+.section-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.section-header h2 {
+    font-size: 1.4em;
+    color: var(--font-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-area {
+    border: 2px dashed var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+    margin-bottom: 25px;
+}
+
+.upload-area:hover {
+    background: var(--secondary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.upload-content i {
+    font-size: 3em;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.file-input {
+    display: none;
+}
+
+.settings-panel {
+    margin-top: 20px;
+}
+
+.setting-group {
+    margin-bottom: 20px;
+}
+
+.setting-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--font-color);
+}
+
+.setting-group input,
+.setting-group select,
+.setting-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    background: var(--background);
+    color: var(--font-color);
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.setting-group textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+.setting-group input:focus,
+.setting-group select:focus,
+.setting-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.setting-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.value-display {
+    display: inline-block;
+    min-width: 50px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.setting-group small {
+    display: block;
+    margin-top: 5px;
+    color: #6b7280;
+    font-size: 0.875em;
+}
+
+/* API配置样式 */
+.api-config-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid var(--card-border);
+}
+
+.token-display {
+    background: var(--background);
+    padding: 12px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.token-status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.token-status-badge.success {
+    background: var(--success-color);
+    color: white;
+}
+
+/* 预览区域样式 */
+.preview-container {
+    position: relative;
+    background: var(--background);
+    border-radius: var(--border-radius);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+}
+
+.preview-placeholder {
+    text-align: center;
+    color: #6b7280;
+    padding: 40px;
+}
+
+.preview-image,
+.text-canvas {
+    max-width: 100%;
+    max-height: 500px;
+    display: none;
+}
+
+/* 按钮样式 */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: var(--success-color);
+    color: white;
+}
+
+.btn-info {
+    background: var(--info-color);
+    color: white;
+}
+
+.btn-secondary {
+    background: #6b7280;
+    color: white;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--font-color);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* 结果区域样式 */
+.result-section {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--success-color);
+    display: none;
+}
+
+.image-url-container {
+    margin: 15px 0;
+}
+
+.image-url-container label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.image-url {
+    background: var(--background);
+    padding: 12px;
+    border-radius: var(--border-radius);
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+    border: 1px solid var(--card-border);
+    font-size: 0.9em;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* 加载动画 */
+.loading {
+    display: none;
+    text-align: center;
+    padding: 30px;
+}
+
+.spinner {
+    border: 3px solid var(--card-border);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .tool-main {
+        gap: 20px;
+    }
+    
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .setting-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    .tool-header h1 {
+        font-size: 2em;
+    }
+}
+</style>
+
+<script>
+console.log('=== 图片文字添加工具脚本开始加载 ===');
+
+// 固定Token配置
+const FIXED_API_TOKEN = '1|mkePuCqsOmJBr9e7ZiBRZV5Oai65GsrShiBZ4AYs';
+const API_ENDPOINT = 'http://115.190.196.142/api/v1/upload';
+
+// DOM 元素
+const imageInput = document.getElementById('imageInput');
+const uploadArea = document.getElementById('uploadArea');
+const previewImage = document.getElementById('previewImage');
+const previewPlaceholder = document.getElementById('previewPlaceholder');
+const textCanvas = document.getElementById('textCanvas');
+const applyButton = document.getElementById('applyText');
+const downloadButton = document.getElementById('downloadImage');
+const uploadButton = document.getElementById('uploadImage');
+const resetButton = document.getElementById('resetTool');
+const resultSection = document.getElementById('resultSection');
+const imageUrl = document.getElementById('imageUrl');
+const copyUrlButton = document.getElementById('copyUrl');
+const newImageButton = document.getElementById('newImage');
+const loadingIndicator = document.getElementById('loadingIndicator');
+
+// 文字控制元素
+const textContent = document.getElementById('textContent');
+const textPosition = document.getElementById('textPosition');
+const textColor = document.getElementById('textColor');
+const textOpacity = document.getElementById('textOpacity');
+const opacityValue = document.getElementById('opacityValue');
+const textSize = document.getElementById('textSize');
+const sizeValue = document.getElementById('sizeValue');
+const textAngle = document.getElementById('textAngle');
+const angleValue = document.getElementById('angleValue');
+const fontFamily = document.getElementById('fontFamily');
+const fontWeight = document.getElementById('fontWeight');
+const textShadow = document.getElementById('textShadow');
+const backgroundColor = document.getElementById('backgroundColor');
+const backgroundOpacity = document.getElementById('backgroundOpacity');
+const bgOpacityValue = document.getElementById('bgOpacityValue');
+
+// 全局变量
+let originalImage = null;
+let processedImageDataUrl = null;
+
+console.log('固定Token已设置:', FIXED_API_TOKEN);
+
+// 事件监听器
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM加载完成，开始设置事件监听器');
+    
+    // 上传区域事件
+    if (uploadArea) {
+        uploadArea.addEventListener('click', () => {
+            console.log('点击上传区域');
+            if (imageInput) imageInput.click();
+        });
+        
+        // 拖拽功能
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = 'var(--secondary-color)';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.background = 'var(--card-bg)';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = 'var(--card-bg)';
+            if (e.dataTransfer.files.length) {
+                console.log('拖拽文件:', e.dataTransfer.files[0].name);
+                handleImageUpload(e.dataTransfer.files[0]);
+            }
+        });
+    }
+
+    // 文件输入变化
+    if (imageInput) {
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                console.log('选择文件:', e.target.files[0].name);
+                handleImageUpload(e.target.files[0]);
+            }
+        });
+    }
+
+    // 文字控制事件
+    if (textOpacity && opacityValue) {
+        textOpacity.addEventListener('input', () => {
+            opacityValue.textContent = Math.round((textOpacity.value || 0.9) * 100) + '%';
+            updateTextIfApplied();
+        });
+        opacityValue.textContent = Math.round((textOpacity.value || 0.9) * 100) + '%';
+    }
+    
+    if (textSize && sizeValue) {
+        textSize.addEventListener('input', () => {
+            sizeValue.textContent = (textSize.value || 48) + 'px';
+            updateTextIfApplied();
+        });
+        sizeValue.textContent = (textSize.value || 48) + 'px';
+    }
+    
+    if (textAngle && angleValue) {
+        textAngle.addEventListener('input', () => {
+            angleValue.textContent = (textAngle.value || 0) + '°';
+            updateTextIfApplied();
+        });
+        angleValue.textContent = (textAngle.value || 0) + '°';
+    }
+    
+    if (backgroundOpacity && bgOpacityValue) {
+        backgroundOpacity.addEventListener('input', () => {
+            bgOpacityValue.textContent = Math.round((backgroundOpacity.value || 0) * 100) + '%';
+            updateTextIfApplied();
+        });
+        bgOpacityValue.textContent = Math.round((backgroundOpacity.value || 0) * 100) + '%';
+    }
+    
+    if (textContent) textContent.addEventListener('input', updateTextIfApplied);
+    if (textColor) textColor.addEventListener('input', updateTextIfApplied);
+    if (textPosition) textPosition.addEventListener('change', updateTextIfApplied);
+    if (fontFamily) fontFamily.addEventListener('change', updateTextIfApplied);
+    if (fontWeight) fontWeight.addEventListener('change', updateTextIfApplied);
+    if (textShadow) textShadow.addEventListener('change', updateTextIfApplied);
+    if (backgroundColor) backgroundColor.addEventListener('input', updateTextIfApplied);
+
+    // 按钮事件
+    if (applyButton) {
+        applyButton.addEventListener('click', function() {
+            console.log('点击应用文字按钮');
+            applyTextToImage();
+        });
+    }
+    
+    if (downloadButton) downloadButton.addEventListener('click', downloadImage);
+    if (uploadButton) uploadButton.addEventListener('click', uploadToImageHost);
+    if (resetButton) resetButton.addEventListener('click', resetTool);
+    if (copyUrlButton) copyUrlButton.addEventListener('click', copyImageUrl);
+    if (newImageButton) newImageButton.addEventListener('click', resetTool);
+    
+    console.log('事件监听器设置完成');
+});
+
+// 处理图片上传
+function handleImageUpload(file) {
+    console.log('处理图片上传:', file.name);
+    
+    if (!file.type.match('image.*')) {
+        alert('请上传图片文件！');
+        return;
+    }
+    
+    if (file.size > 10 * 1024 * 1024) {
+        alert('图片大小不能超过10MB！');
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        console.log('文件读取完成');
+        originalImage = new Image();
+        originalImage.onload = function() {
+            console.log('图片加载完成，尺寸:', originalImage.width, 'x', originalImage.height);
+            
+            // 显示预览图片
+            if (previewImage) {
+                previewImage.style.display = 'block';
+                previewImage.src = e.target.result;
+            }
+            if (previewPlaceholder) previewPlaceholder.style.display = 'none';
+            if (textCanvas) textCanvas.style.display = 'none';
+            if (resultSection) resultSection.style.display = 'none';
+            
+            // 启用应用按钮，禁用其他按钮
+            if (applyButton) applyButton.disabled = false;
+            if (downloadButton) downloadButton.disabled = true;
+            if (uploadButton) uploadButton.disabled = true;
+            
+            console.log('图片显示完成，应用按钮已启用');
+        };
+        originalImage.onerror = function() {
+            console.error('图片加载失败');
+            alert('图片加载失败，请重试！');
+        };
+        originalImage.src = e.target.result;
+    };
+    reader.onerror = function() {
+        console.error('文件读取失败');
+        alert('文件读取失败！');
+    };
+    reader.readAsDataURL(file);
+}
+
+// 应用文字到图片
+function applyTextToImage() {
+    console.log('开始应用文字到图片');
+    
+    if (!originalImage) {
+        alert('请先上传图片！');
+        return;
+    }
+    
+    if (!textCanvas) {
+        alert('系统错误：画布元素未找到');
+        return;
+    }
+    
+    const canvas = textCanvas;
+    const ctx = canvas.getContext('2d');
+    
+    // 设置canvas尺寸与图片相同
+    canvas.width = originalImage.width;
+    canvas.height = originalImage.height;
+    console.log('Canvas尺寸设置:', canvas.width, 'x', canvas.height);
+    
+    // 清除画布
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // 绘制原始图片
+    ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+    console.log('原始图片已绘制到canvas');
+    
+    // 安全获取参数值
+    const fontSize = parseInt(textSize?.value || 48);
+    const color = textColor?.value || '#ffffff';
+    const opacity = parseFloat(textOpacity?.value || 0.9);
+    const text = textContent?.value || '请输入文字内容';
+    const angle = parseInt(textAngle?.value || 0);
+    const position = textPosition?.value || 'bottom';
+    const fontFamilyValue = fontFamily?.value || 'Arial, sans-serif';
+    const fontWeightValue = fontWeight?.value || 'bold';
+    const textShadowValue = textShadow?.value || '2px 2px 4px rgba(0,0,0,0.5)';
+    const bgColor = backgroundColor?.value || 'transparent';
+    const bgOpacity = parseFloat(backgroundOpacity?.value || 0);
+    
+    console.log('文字参数:', { 
+        text, 
+        fontSize, 
+        color, 
+        opacity, 
+        angle, 
+        position,
+        fontFamily: fontFamilyValue,
+        fontWeight: fontWeightValue,
+        textShadow: textShadowValue,
+        bgColor,
+        bgOpacity
+    });
+    
+    // 设置文字样式
+    ctx.font = `${fontWeightValue} ${fontSize}px ${fontFamilyValue}`;
+    ctx.fillStyle = color;
+    ctx.globalAlpha = opacity;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(0,0,0,0)'; // 重置阴影
+    
+    // 设置文字阴影
+    if (textShadowValue !== 'none') {
+        const shadowParts = textShadowValue.split(' ');
+        if (shadowParts.length >= 3) {
+            ctx.shadowOffsetX = parseFloat(shadowParts[0]);
+            ctx.shadowOffsetY = parseFloat(shadowParts[1]);
+            ctx.shadowBlur = parseFloat(shadowParts[2]);
+            ctx.shadowColor = shadowParts[3] || 'rgba(0,0,0,0.5)';
+        }
+    }
+    
+    // 计算文字位置
+    const textMetrics = ctx.measureText(text);
+    const textWidth = textMetrics.width;
+    const textHeight = fontSize;
+    
+    let x, y;
+    
+    // 根据位置计算坐标
+    switch(position) {
+        case 'top':
+            x = canvas.width / 2;
+            y = textHeight + 20;
+            break;
+        case 'center':
+            x = canvas.width / 2;
+            y = canvas.height / 2;
+            break;
+        case 'bottom':
+            x = canvas.width / 2;
+            y = canvas.height - textHeight - 20;
+            break;
+        case 'top-left':
+            x = textWidth / 2 + 20;
+            y = textHeight + 20;
+            break;
+        case 'top-right':
+            x = canvas.width - textWidth / 2 - 20;
+            y = textHeight + 20;
+            break;
+        case 'bottom-left':
+            x = textWidth / 2 + 20;
+            y = canvas.height - textHeight - 20;
+            break;
+        case 'bottom-right':
+            x = canvas.width - textWidth / 2 - 20;
+            y = canvas.height - textHeight - 20;
+            break;
+        case 'custom':
+            x = canvas.width / 2;
+            y = canvas.height / 2;
+            break;
+        default:
+            x = canvas.width / 2;
+            y = canvas.height - textHeight - 20;
+    }
+    
+    // 绘制背景（如果有）
+    if (bgColor !== 'transparent' && bgOpacity > 0) {
+        ctx.save();
+        ctx.globalAlpha = bgOpacity;
+        ctx.fillStyle = bgColor;
+        
+        const padding = 20;
+        const bgWidth = textWidth + padding * 2;
+        const bgHeight = textHeight + padding;
+        const bgX = x - bgWidth / 2;
+        const bgY = y - textHeight / 2 - padding / 2;
+        
+        // 绘制圆角矩形背景
+        const borderRadius = 10;
+        ctx.beginPath();
+        ctx.moveTo(bgX + borderRadius, bgY);
+        ctx.lineTo(bgX + bgWidth - borderRadius, bgY);
+        ctx.quadraticCurveTo(bgX + bgWidth, bgY, bgX + bgWidth, bgY + borderRadius);
+        ctx.lineTo(bgX + bgWidth, bgY + bgHeight - borderRadius);
+        ctx.quadraticCurveTo(bgX + bgWidth, bgY + bgHeight, bgX + bgWidth - borderRadius, bgY + bgHeight);
+        ctx.lineTo(bgX + borderRadius, bgY + bgHeight);
+        ctx.quadraticCurveTo(bgX, bgY + bgHeight, bgX, bgY + bgHeight - borderRadius);
+        ctx.lineTo(bgX, bgY + borderRadius);
+        ctx.quadraticCurveTo(bgX, bgY, bgX + borderRadius, bgY);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+        
+        // 恢复文字透明度
+        ctx.globalAlpha = opacity;
+    }
+    
+    // 绘制文字
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle * Math.PI / 180);
+    ctx.fillText(text, 0, 0);
+    ctx.restore();
+    
+    // 显示canvas，隐藏原图
+    textCanvas.style.display = 'block';
+    if (previewImage) previewImage.style.display = 'none';
+    if (previewPlaceholder) previewPlaceholder.style.display = 'none';
+    
+    // 保存处理后的图片数据
+    try {
+        processedImageDataUrl = canvas.toDataURL('image/png');
+        console.log('文字添加完成，图片生成成功');
+        
+        // 启用下载和上传按钮
+        if (downloadButton) downloadButton.disabled = false;
+        if (uploadButton) uploadButton.disabled = false;
+        
+        console.log('下载和上传按钮已启用');
+    } catch (error) {
+        console.error('生成DataURL失败:', error);
+        alert('生成图片失败！');
+        return;
+    }
+}
+
+// 下载图片
+function downloadImage() {
+    console.log('开始下载图片');
+    
+    if (!processedImageDataUrl) {
+        alert('请先应用文字！');
+        return;
+    }
+    
+    try {
+        const link = document.createElement('a');
+        link.download = 'text-added-image.png';
+        link.href = processedImageDataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        console.log('图片下载完成');
+    } catch (error) {
+        console.error('下载失败:', error);
+        alert('下载失败，请重试！');
+    }
+}
+
+// 上传到图床
+async function uploadToImageHost() {
+    console.log('开始上传到图床');
+    
+    if (!processedImageDataUrl) {
+        alert('请先应用文字！');
+        return;
+    }
+    
+    // 显示加载指示器
+    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    if (uploadButton) uploadButton.disabled = true;
+    
+    try {
+        console.log('将DataURL转换为Blob');
+        // 将DataURL转换为Blob
+        const response = await fetch(processedImageDataUrl);
+        const blob = await response.blob();
+        
+        // 创建FormData
+        const formData = new FormData();
+        formData.append('file', blob, 'text-added-image.png');
+        
+        console.log('发送上传请求到:', API_ENDPOINT);
+        
+        // 发送上传请求
+        const uploadResponse = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${FIXED_API_TOKEN}`,
+                'Accept': 'application/json'
+            },
+            body: formData
+        });
+        
+        console.log('上传响应状态:', uploadResponse.status);
+        
+        if (!uploadResponse.ok) {
+            const errorText = await uploadResponse.text();
+            console.error('上传错误响应:', errorText);
+            
+            // 根据状态码提供更具体的错误信息
+            if (uploadResponse.status === 401) {
+                throw new Error('Token无效或已过期，请检查API Token');
+            } else if (uploadResponse.status === 403) {
+                throw new Error('权限不足，请联系管理员');
+            } else if (uploadResponse.status === 429) {
+                throw new Error('请求过于频繁，请稍后重试');
+            } else {
+                throw new Error(`上传失败: ${uploadResponse.status} - ${uploadResponse.statusText}`);
+            }
+        }
+        
+        const result = await uploadResponse.json();
+        console.log('上传响应数据:', result);
+        
+        if (result.status && result.data) {
+            // 显示结果
+            if (imageUrl) {
+                const imageUrlText = result.data.links?.url || result.data.url || 'URL未找到';
+                imageUrl.textContent = imageUrlText;
+                
+                // 如果是有效的URL，添加链接
+                if (imageUrlText.startsWith('http')) {
+                    imageUrl.innerHTML = `<a href="${imageUrlText}" target="_blank" style="color: var(--primary-color); text-decoration: none;">${imageUrlText}</a>`;
+                }
+            }
+            
+            if (resultSection) resultSection.style.display = 'block';
+            
+            // 平滑滚动到结果区域
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+            console.log('上传成功，显示结果');
+        } else {
+            throw new Error(result.message || '上传失败，服务器返回错误状态');
+        }
+        
+    } catch (error) {
+        console.error('上传错误:', error);
+        alert('上传失败: ' + error.message);
+    } finally {
+        // 隐藏加载指示器
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        if (uploadButton) uploadButton.disabled = false;
+    }
+}
+
+// 复制图片URL
+function copyImageUrl() {
+    console.log('复制图片URL');
+    
+    const url = imageUrl?.textContent;
+    if (!url) {
+        alert('没有可复制的URL');
+        return;
+    }
+    
+    navigator.clipboard.writeText(url).then(() => {
+        console.log('复制成功');
+        // 临时更改按钮文本
+        const originalText = copyUrlButton.innerHTML;
+        copyUrlButton.innerHTML = '<i class="fas fa-check"></i> 已复制!';
+        setTimeout(() => {
+            copyUrlButton.innerHTML = originalText;
+        }, 2000);
+    }).catch(err => {
+        console.error('复制失败:', err);
+        alert('复制失败，请手动复制链接');
+    });
+}
+
+// 重置工具
+function resetTool() {
+    console.log('重置工具');
+    originalImage = null;
+    processedImageDataUrl = null;
+    
+    if (imageInput) imageInput.value = '';
+    if (previewImage) {
+        previewImage.style.display = 'none';
+        previewImage.src = '';
+    }
+    if (textCanvas) textCanvas.style.display = 'none';
+    if (previewPlaceholder) previewPlaceholder.style.display = 'block';
+    if (resultSection) resultSection.style.display = 'none';
+    
+    if (applyButton) applyButton.disabled = true;
+    if (downloadButton) downloadButton.disabled = true;
+    if (uploadButton) uploadButton.disabled = true;
+    
+    // 重置表单值
+    if (textContent) textContent.value = '不待的技术栈 - 专注分享优质内容';
+    if (textPosition) textPosition.value = 'bottom';
+    if (textColor) textColor.value = '#ffffff';
+    if (textOpacity) textOpacity.value = 0.9;
+    if (textSize) textSize.value = 48;
+    if (textAngle) textAngle.value = 0;
+    if (fontFamily) fontFamily.value = 'Arial, sans-serif';
+    if (fontWeight) fontWeight.value = 'bold';
+    if (textShadow) textShadow.value = '2px 2px 4px rgba(0,0,0,0.5)';
+    if (backgroundColor) backgroundColor.value = 'transparent';
+    if (backgroundOpacity) backgroundOpacity.value = 0;
+    
+    // 更新显示值
+    if (opacityValue) opacityValue.textContent = '90%';
+    if (sizeValue) sizeValue.textContent = '48px';
+    if (angleValue) angleValue.textContent = '0°';
+    if (bgOpacityValue) bgOpacityValue.textContent = '0%';
+    
+    console.log('工具重置完成');
+}
+
+// 如果已应用文字，更新文字
+function updateTextIfApplied() {
+    if (uploadButton && !uploadButton.disabled) {
+        console.log('检测到文字已应用，更新文字');
+        applyTextToImage();
+    }
+}
+
+// 错误处理
+window.addEventListener('error', function(e) {
+    console.error('全局错误:', e.error);
+    console.error('错误位置:', e.filename, ':', e.lineno);
+});
+
+// 未处理的Promise拒绝
+window.addEventListener('unhandledrejection', function(e) {
+    console.error('未处理的Promise拒绝:', e.reason);
+});
+
+console.log('=== 图片文字添加工具脚本加载完成 ===');
+
+// 调试函数
+window.debugTextTool = {
+    getState: function() {
+        return {
+            originalImage: !!originalImage,
+            processedImageDataUrl: !!processedImageDataUrl,
+            canvasSize: textCanvas ? `${textCanvas.width}x${textCanvas.height}` : 'N/A',
+            fixedToken: FIXED_API_TOKEN,
+            elements: {
+                imageInput: !!imageInput,
+                uploadArea: !!uploadArea,
+                textCanvas: !!textCanvas,
+                applyButton: !!applyButton,
+                downloadButton: !!downloadButton,
+                uploadButton: !!uploadButton
+            }
+        };
+    },
+    testApply: function() {
+        if (!originalImage) {
+            console.log('没有图片，无法测试');
+            return;
+        }
+        applyTextToImage();
+    },
+    reset: resetTool,
+    getCurrentSettings: function() {
+        return {
+            text: textContent?.value,
+            fontSize: textSize?.value,
+            color: textColor?.value,
+            opacity: textOpacity?.value,
+            position: textPosition?.value,
+            angle: textAngle?.value
+        };
+    }
+};
+
+console.log('调试函数已加载，使用 debugTextTool 进行调试');
+</script>
+
+<div class="note modern primary flat"><p><strong>使用说明</strong>：</p>
+<ol>
+<li>上传图片并设置文字参数</li>
+<li>点击”应用文字”预览效果</li>
+<li>可选择下载图片或上传到图床</li>
+<li>Token已固定配置，无需手动输入</li>
+</ol>
+</div>
+
+<div class="note modern info flat"><p><strong>功能特性</strong>：</p>
+<ul>
+<li>✅ 支持多种字体和样式</li>
+<li>✅ 文字阴影和背景效果</li>
+<li>✅ 多种位置选择</li>
+<li>✅ 实时预览效果</li>
+<li>✅ 一键上传到图床</li>
+</ul>
+</div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div><div class="comment-tips" id="comment-tips"><span>✅ 你无需删除空行，直接评论以获取最佳展示效果</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">后端开发、人工智能​ 和 运维实践​ </b>原创文章、实战教程与技术观点，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">不待</h1><div class="author-info__desc">Backend, AI &amp; DevOps Sharing</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/djsindn" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://blog.csdn.net/qq_61375008" target="_blank" title="CSDN"><i class="anzhiyufont anzhiyu-icon-csdn"></i></a><a class="social-icon faa-parent animated-hover" href="tencent://Message/?Uin=1410844974" target="_blank" title="QQ"><i class="anzhiyufont anzhiyu-icon-qq"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">今日KPI：拿下杭州offer！✨</div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="anzhiyufont anzhiyu-icon-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/"><span class="card-category-list-name">linux</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux%E5%9F%BA%E7%A1%80/"><span class="card-category-list-name">linux基础</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/python/"><span class="card-category-list-name">python</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/python/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/vpn/"><span class="card-category-list-name">vpn</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/"><span class="card-category-list-name">云计算</span><span class="card-category-list-count">2</span></a></li>
+            </ul></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text"> 文字设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#uploadArea"><span class="toc-number">1.1.</span> <span class="toc-text">点击选择图片或拖拽到此区域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text"> 图床配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text"> 实时预览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#resultSection"><span class="toc-number">3.1.</span> <span class="toc-text"> 上传成功！</span></a></li></ol></li></ol></div></div><div class="card-widget"><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/httpd/" style="font-size: 1.05rem;">httpd<sup>1</sup></a><a href="/tags/linux/" style="font-size: 1.05rem;">linux<sup>5</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>1</sup></a><a href="/tags/requests/" style="font-size: 1.05rem;">requests<sup>1</sup></a><a href="/tags/vpn/" style="font-size: 1.05rem;">vpn<sup>1</sup></a><a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" style="font-size: 1.05rem;">云计算<sup>4</sup></a><a href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/" style="font-size: 1.05rem;">公有云<sup>3</sup></a><a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.05rem;">爬虫<sup>1</sup></a></div></div><hr/><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/11/"><span class="card-archive-list-date">十一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li></ul></div><hr/><div class="card-webinfo"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="webinfo-item-title"><i class="anzhiyufont anzhiyu-icon-file-lines"></i><div class="item-name">文章总数 :</div></div><div class="item-count">7</div></div><div class="webinfo-item"><div class="webinfo-item-title"><i class="anzhiyufont anzhiyu-icon-stopwatch"></i><div class="item-name">建站天数 :</div></div><div class="item-count" id="runtimeshow" data-publishDate="2021-03-31T16:00:00.000Z"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></div></div><div class="webinfo-item"><div class="webinfo-item-title"><i class="anzhiyufont anzhiyu-icon-font"></i><div class="item-name">全站字数 :</div></div><div class="item-count">17.4k</div></div><div class="webinfo-item"><div class="webinfo-item-title"><i class="anzhiyufont anzhiyu-icon-universal-access"></i><div class="item-name">总访客数 :</div></div><div class="item-count" id="busuanzi_value_site_uv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></div></div><div class="webinfo-item"><div class="webinfo-item-title"><i class="anzhiyufont anzhiyu-icon-square-poll-vertical"></i><div class="item-name">总访问量 :</div></div><div class="item-count" id="busuanzi_value_site_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></div></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="footer_deal"><a class="deal_link" href="mailto:anzhiyu-c@qq.com" title="email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://weibo.com/u/6378063631" title="微博"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://www.facebook.com/profile.php?id=100092208016287&amp;sk=about" title="facebook"><i class="anzhiyufont anzhiyu-icon-facebook1"></i></a><a class="deal_link" href="/atom.xml" title="RSS"><i class="anzhiyufont anzhiyu-icon-rss"></i></a><img class="footer_mini_logo" title="返回顶部" alt="返回顶部" onclick="anzhiyu.scrollToDest(0, 500)" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/img/avatar.jpg" size="50px"/><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/372204786" title="Bilibili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/DwCpMEy/" title="抖音"><i class="anzhiyufont anzhiyu-icon-tiktok"></i></a><a class="deal_link" href="/copyright" title="CC"><i class="anzhiyufont anzhiyu-icon-copyright-line"></i></a></div><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/foolter/budai_moyu.svg" alt="上班时间偷偷来看看博客~" title="上班时间偷偷来看看博客~"/><div id="runtimeTextTip"></div></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title="博客框架为Hexo_v5.4.0"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Frame-Hexo.svg" alt="博客框架为Hexo_v5.4.0"/></a><a class="github-badge" target="_blank" href="https://hexo.anheyu.com/" style="margin-inline:5px" data-title="本站使用AnZhiYu主题" title="本站使用AnZhiYu主题"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.9/img/Theme-AnZhiYu-2E67D3.svg" alt="本站使用AnZhiYu主题"/></a><a class="github-badge" target="_blank" href="https://www.dogecloud.com/" style="margin-inline:5px" data-title="本站使用多吉云为静态资源提供CDN加速" title="本站使用多吉云为静态资源提供CDN加速"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/CDN-多吉云-3693F3.svg" alt="本站使用多吉云为静态资源提供CDN加速"/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/Copyright-BY-NC-SA.svg" alt="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"/></a></p></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 By <a class="footer-bar-link" href="/" title="不待" target="_blank">不待</a></div></div><div id="footer-type-tips"></div><div class="js-pjax"><script>function subtitleType () {
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      if (true) {
+        const from = '出自 ' + data.from
+        const sub = ["生活明朗&#44; 万物可爱&#44; 人间值得&#44; 未来可期."]
+        sub.unshift(data.hitokoto, from)
+        window.typed = new Typed('#footer-type-tips', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: true,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('footer-type-tips').innerHTML = data.hitokoto
+      }
+    })
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.cbd.int/typed.js@2.1.0/dist/typed.umd.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}
+</script></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="AnZhiYu Theme">AnZhiYu Theme</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://blog.budai.fun/" title="Budai Blog">Budai Blog</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="Hexo">Hexo</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">6</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.budai.fun/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="http://115.190.196.142/upload" title="不待图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/i/2025/11/23/6922b0babf50b.jpg" alt="不待图床"/><span class="back-menu-item-text">不待图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友情链接</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 工具</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/image-watermark/"><i class="anzhiyufont anzhiyu-icon-image faa-tada" style="font-size: 0.9em;"></i><span> 图片水印</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/httpd/" style="font-size: 0.88rem;">httpd<sup>1</sup></a><a href="/tags/linux/" style="font-size: 0.88rem;">linux<sup>5</sup></a><a href="/tags/python/" style="font-size: 0.88rem;">python<sup>1</sup></a><a href="/tags/requests/" style="font-size: 0.88rem;">requests<sup>1</sup></a><a href="/tags/vpn/" style="font-size: 0.88rem;">vpn<sup>1</sup></a><a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" style="font-size: 0.88rem;">云计算<sup>4</sup></a><a href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/" style="font-size: 0.88rem;">公有云<sup>3</sup></a><a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 0.88rem;">爬虫<sup>1</sup></a></div></div><hr/></div></div><div id="keyboard-tips"><div class="keyboardTitle">博客快捷键</div><div class="keybordList"><div class="keybordItem"><div class="keyGroup"><div class="key">shift K</div></div><div class="keyContent"><div class="content">关闭快捷键功能</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift A</div></div><div class="keyContent"><div class="content">打开/关闭中控台</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift M</div></div><div class="keyContent"><div class="content">播放/暂停音乐</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift D</div></div><div class="keyContent"><div class="content">深色/浅色显示模式</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift S</div></div><div class="keyContent"><div class="content">站内搜索</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift R</div></div><div class="keyContent"><div class="content">随机访问</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift H</div></div><div class="keyContent"><div class="content">返回首页</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift F</div></div><div class="keyContent"><div class="content">友链鱼塘</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift L</div></div><div class="keyContent"><div class="content">友链页面</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift P</div></div><div class="keyContent"><div class="content">关于本站</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift I</div></div><div class="keyContent"><div class="content">原版/本站右键菜单</div></div></div></div></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>转为繁体</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("022/05/2022 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.15",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 不待 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("022/05/2022 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "/images/foolter/budai_xiaban.svg";
+        img.title = "下班了，放松放松~";
+        img.alt = "下班了，放松放松~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'http://115.190.196.142:8080/',
+      region: '',
+      onCommentLoaded: () => {
+        anzhiyu.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(runFn,0)
+    else getScript('https://cdn.cbd.int/twikoo@1.6.44/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'http://115.190.196.142:8080/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const runFn = () => {
+    init();
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else {
+      loadTwikoo()
+    }
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="image-watermark"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="/css/custom.css"><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:type\"]","meta[property=\"og:site_name\"]","meta[property=\"og:description\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

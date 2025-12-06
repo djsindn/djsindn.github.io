@@ -1,0 +1,565 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Docker-Compose完整部署RustDesk自建服务器 | 不待的技术栈 | 后端 &amp; AI &amp; 运维</title><meta name="keywords" content="linux,公有云"><meta name="author" content="不待"><meta name="copyright" content="不待"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Docker-Compose完整部署RustDesk自建服务器"><meta name="application-name" content="Docker-Compose完整部署RustDesk自建服务器"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Docker-Compose完整部署RustDesk自建服务器"><meta property="og:url" content="http://example.com/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html"><meta property="og:site_name" content="不待的技术栈 | 后端 &amp; AI &amp; 运维"><meta property="og:description" content="Docker-Compose完整部署RustDesk自建服务器一、环境准备与前置条件在开始部署前，您需要确保服务器满足以下基本要求：服务器要求：  具有公网IP的服务器（云主机如阿里云、腾讯云等） 最低配置：1核1G内存（仅内网使用可更低） 至少1GB磁盘空间用于镜像和数据存储  软件要求：  do"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="http://example.com/images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image2.png"><meta property="article:author" content="不待"><meta property="article:tag" content="后端开发,AI开发,DevOps,运维实战,Java,Python,机器学习,云原生,Linux,技术博客"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="http://example.com/images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image2.png"><meta name="description" content="Docker-Compose完整部署RustDesk自建服务器一、环境准备与前置条件在开始部署前，您需要确保服务器满足以下基本要求：服务器要求：  具有公网IP的服务器（云主机如阿里云、腾讯云等） 最低配置：1核1G内存（仅内网使用可更低） 至少1GB磁盘空间用于镜像和数据存储  软件要求：  do"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: {"enable":true,"title":"与数百名博主无限进步","addFriendPlaceholder":"昵称（请勿包含博客等字样）：\n网站地址（要求博客地址，请勿提交个人主页）：\n头像图片url（请提供尽可能清晰的图片，我会上传到我自己的图床）：\n描述：\n站点截图（可选）：\n"},
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: {"enable":true,"gptName":"budai","mode":"tianli","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"S-0H7EQK3R0PLB4S69","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"不再看看吗？","backTitle":"欢迎来看我的博客鸭~"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: 'http://115.190.196.142:8080/',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: {"apiurl":"https://friends.anheyu.com/"},
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: 不待","link":"链接: ","source":"来源: 不待的技术栈 | 后端 & AI & 运维","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: {"enable":true,"delay":100,"shiftDelay":200},
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '不待的技术栈 | 后端 & AI & 运维',
+  title: 'Docker-Compose完整部署RustDesk自建服务器',
+  postAI: '',
+  pageFillDescription: 'Docker-Compose完整部署RustDesk自建服务器, 一、环境准备与前置条件, 二、完整的Docker-Compose配置文件, 三、部署执行步骤, 四、客户端配置完整部署自建服务器一环境准备与前置条件在开始部署前您需要确保服务器满足以下基本要求服务器要求具有公网的服务器云主机如阿里云腾讯云等最低配置核内存仅内网使用可更低至少磁盘空间用于镜像和数据存储软件要求安装教程安装教程开放必要的防火墙端口官方安装文档对于其他发行版请参考相应教程安装安装安装环境检查命令检查是否安装检查是否安装若未安装执行安装命令示例二完整的配置文件创建项目目录并编写配置文件创建专用目录创建文件你的服务器或域名注册与心跳服务数据传输端口类型探测管理用中继服务管理用关键配置说明网络配置使用自定义网络为和分配固定和增强网络稳定性端口映射必须开放的端口和各端口用途明确区分便于防火墙配置安全配置参数自动生成加密密钥强制客户端使用密钥连接数据持久化将密钥和配置数据挂载到本地目录健康检查内置健康检查脚本确保服务正常运行秒检查间隔次重试机制三部署执行步骤修改配置文件将配置文件中的你的服务器或域名替换为实际值自动获取公网并替换可选你的服务器或域名启动服务拉取最新镜像后台启动服务查看服务状态查看实时日志获取密钥服务启动后需要获取生成的公钥用于客户端配置方法一查看日志获取密钥方法二直接查看公钥文件密钥格式类似配置防火墙确保服务器防火墙开放必要端口开放端口开放端口重新加载防火墙规则如果是云服务器的话在厂商控制台进行放开四客户端配置客户端下载并安装客户端官网点击下载会跳转到根据你自己需要的版本和架构下载就好进入设置网络配置以下参数服务器你的服务器或域名中继服务器你的服务器或域名从文件中获取的公钥我的是自定义的服务器是搭再局域网写教程的所以比较草率不要学我到这里需要远程的电脑都配置到之后就可以开启远程了也可以在软件上设置密码使用一次性或者长期固定密码在控制端输入被控端的远程代码即可远程好了其他功能请自行摸索并且自建中继服务器支持对手机的远程操控官方提供是不支持的太多谨慎使用自己用无所谓了命令行参数配置高级你的服务器你的服务器你的服务器你的服务器你的服务器你的服务器服务升级拉取最新镜像重启服务自动使用新镜像查看当前使用的镜像版本',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-06 19:30:22',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 8.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/images/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.budai.fun/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="http://115.190.196.142/upload" title="不待图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/avatar.jpg" alt="不待图床"/><span class="back-menu-item-text">不待图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">不待的技术栈 | 后端 &amp; AI &amp; 运维</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友情链接</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 工具</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/image-watermark/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 图片水印</span></a></li></ul></div></div></div><div id="nav-right"><div id="nav-naoDark"><div class="container"><div class="components"><div class="main-button"><div class="moon"></div><div class="moon"></div><div class="moon"></div></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="cloud"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="cloud-light"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="stars"><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div></div></div></div></div><div class="nav-button only-home" id="travellings_button" title="随机前往一个开往项目网站"><a class="site-page" onclick="anzhiyu.totraveling()" title="随机前往一个开往项目网站" href="javascript:void(0);" rel="external nofollow" data-pjax-state="external"><i class="anzhiyufont anzhiyu-icon-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="http://115.190.196.142/images/2025/11/22/_20251122174144_203_171.jpg" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/images/2025/11/22/_20251122174144_203_171.jpg"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="http://115.190.196.142/images/2025/11/22/_20251122174129_202_171.jpg" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/images/2025/11/22/_20251122174129_202_171.jpg"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/httpd/" style="font-size: 1.05rem;">httpd<sup>1</sup></a><a href="/tags/linux/" style="font-size: 1.05rem;">linux<sup>6</sup></a><a href="/tags/python/" style="font-size: 1.05rem;">python<sup>2</sup></a><a href="/tags/requests/" style="font-size: 1.05rem;">requests<sup>1</sup></a><a href="/tags/vpn/" style="font-size: 1.05rem;">vpn<sup>1</sup></a><a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" style="font-size: 1.05rem;">云计算<sup>4</sup></a><a href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/" style="font-size: 1.05rem;">公有云<sup>4</sup></a><a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 1.05rem;">爬虫<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/11/"><span class="card-archive-list-date">十一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">9</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div><div class="console-btn-item" id="consoleKeyboard" onclick="anzhiyu.keyboardToggle()" title="快捷键开关"><a class="keyboard-switch"><i class="anzhiyufont anzhiyu-icon-keyboard"></i></a></div><div id="console-naoDark"><div class="container"><div class="components"><div class="main-button"><div class="moon"></div><div class="moon"></div><div class="moon"></div></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="daytime-backgrond"></div><div class="cloud"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="cloud-light"><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div><div class="cloud-son"></div></div><div class="stars"><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star big"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star medium"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div><div class="star small"><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div><div class="star-son"></div></div></div></div></div></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/RustDesk/" itemprop="url">RustDesk</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/linux/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>linux</span></a><a class="article-meta__tags" href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>公有云</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Docker-Compose完整部署RustDesk自建服务器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-11-21T13:33:00.000Z" title="发表于 2025-11-21 21:33:00">2025-11-21</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-12-06T11:30:22.797Z" title="更新于 2025-12-06 19:30:22">2025-12-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">1.3k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="Docker-Compose完整部署RustDesk自建服务器"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为安徽"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>安徽</span><span class="post-meta-separator"></span><span class="post-meta-commentcount"><i class="anzhiyufont anzhiyu-icon-comments post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/#post-comment" tabindex="-1"><span id="twikoo-count"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></a></span></div></div></div><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/"><header><a class="post-meta-categories" href="/categories/RustDesk/" itemprop="url">RustDesk</a><a href="/tags/linux/" tabindex="-1" itemprop="url">linux</a><a href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/" tabindex="-1" itemprop="url">公有云</a><h1 id="CrawlerTitle" itemprop="name headline">Docker-Compose完整部署RustDesk自建服务器</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">不待</span><time itemprop="dateCreated datePublished" datetime="2025-11-21T13:33:00.000Z" title="发表于 2025-11-21 21:33:00">2025-11-21</time><time itemprop="dateCreated datePublished" datetime="2025-12-06T11:30:22.797Z" title="更新于 2025-12-06 19:30:22">2025-12-06</time></header><h1 id="Docker-Compose完整部署RustDesk自建服务器"><a href="#Docker-Compose完整部署RustDesk自建服务器" class="headerlink" title="Docker-Compose完整部署RustDesk自建服务器"></a>Docker-Compose完整部署RustDesk自建服务器</h1><h2 id="一、环境准备与前置条件"><a href="#一、环境准备与前置条件" class="headerlink" title="一、环境准备与前置条件"></a>一、环境准备与前置条件</h2><p>在开始部署前，您需要确保服务器满足以下基本要求：<br><strong>服务器要求：</strong></p>
+<ul>
+<li>具有公网IP的服务器（云主机如阿里云、腾讯云等）</li>
+<li>最低配置：1核1G内存（仅内网使用可更低）</li>
+<li>至少1GB磁盘空间用于镜像和数据存储</li>
+</ul>
+<p><strong>软件要求：</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-tutorial.html" title="docker安装教程 ">docker安装教程 </a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-compose.html" title="Docker Compose安装教程 ">Docker Compose安装教程 </a></li>
+<li>开放必要的防火墙端口</li>
+<li>官方安装文档： </li>
+<li>Docker：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/">https://docs.docker.com/engine/install/</a> </li>
+<li>Docker Compose：  <a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">https://docs.docker.com/compose/install/</a> </li>
+<li>对于其他Linux发行版，请参考相应教程：</li>
+<li>CentOS安装：  <a target="_blank" rel="noopener" href="https://www.runoob.com/docker/centos-docker-install.html">https://www.runoob.com/docker/centos-docker-install.html</a> </li>
+<li>Windows安装：  <a target="_blank" rel="noopener" href="https://www.runoob.com/docker/windows-docker-install.html">https://www.runoob.com/docker/windows-docker-install.html</a> </li>
+<li>macOS安装：  <a target="_blank" rel="noopener" href="https://www.runoob.com/docker/macos-docker-install.html">https://www.runoob.com/docker/macos-docker-install.html</a></li>
+</ul>
+<p> </p>
+<p><strong>环境检查命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查Docker是否安装</span></span><br><span class="line">docker --version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查Docker Compose是否安装</span></span><br><span class="line">docker compose version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 若未安装，执行安装命令（Ubuntu示例）</span></span><br><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt install -y docker.io docker-compose-plugin</span><br></pre></td></tr></table></figure>
+<h2 id="二、完整的Docker-Compose配置文件"><a href="#二、完整的Docker-Compose配置文件" class="headerlink" title="二、完整的Docker-Compose配置文件"></a>二、完整的Docker-Compose配置文件</h2><p>创建项目目录并编写配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建专用目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /opt/rustdesk-server &amp;&amp; <span class="built_in">cd</span> /opt/rustdesk-server</span><br></pre></td></tr></table></figure>
+<p>创建<code>docker-compose.yml</code> 文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">rustdesk-net:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">bridge</span></span><br><span class="line">    <span class="attr">ipam:</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">subnet:</span> <span class="number">172.20</span><span class="number">.0</span><span class="number">.0</span><span class="string">/24</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">hbbs:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">hbbs</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">rustdesk/rustdesk-server:latest</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">hbbs</span> <span class="string">-r</span> <span class="string">你的服务器IP或域名:21117</span> <span class="string">-k</span> <span class="string">_</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;21115:21115&quot;</span>       <span class="comment"># TCP - 注册与心跳服务[6](@ref)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;21116:21116&quot;</span>       <span class="comment"># TCP - 数据传输端口[6](@ref)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;21116:21116/udp&quot;</span>   <span class="comment"># UDP - NAT类型探测[6](@ref)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;21118:21118&quot;</span>       <span class="comment"># TCP - HTTP API（管理用）[6](@ref)</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./rustdesk_data:/root</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">rustdesk-net:</span></span><br><span class="line">        <span class="attr">ipv4_address:</span> <span class="number">172.20</span><span class="number">.0</span><span class="number">.10</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">hbbr</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD&quot;</span>, <span class="string">&quot;/usr/bin/healthcheck.sh&quot;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">limits:</span></span><br><span class="line">          <span class="attr">memory:</span> <span class="string">128M</span></span><br><span class="line">          <span class="attr">cpus:</span> <span class="string">&#x27;0.5&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">hbbr:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">hbbr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">rustdesk/rustdesk-server:latest</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">hbbr</span> <span class="string">-k</span> <span class="string">_</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;21117:21117&quot;</span>       <span class="comment"># TCP - 中继服务[6](@ref)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;21119:21119&quot;</span>       <span class="comment"># TCP - HTTP API（管理用）[6](@ref)</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./rustdesk_data:/root</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">rustdesk-net:</span></span><br><span class="line">        <span class="attr">ipv4_address:</span> <span class="number">172.20</span><span class="number">.0</span><span class="number">.11</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD&quot;</span>, <span class="string">&quot;/usr/bin/healthcheck.sh&quot;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">30s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">10s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">3</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">limits:</span></span><br><span class="line">          <span class="attr">memory:</span> <span class="string">128M</span></span><br><span class="line">          <span class="attr">cpus:</span> <span class="string">&#x27;0.5&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><strong>关键配置说明：</strong></p>
+<p><strong>网络配置：</strong></p>
+<ul>
+<li>使用自定义bridge网络 rustdesk-net </li>
+<li>为hbbs和hbbr分配固定IP（172.20.0.10和172.20.0.11），增强网络稳定性</li>
+</ul>
+<p><strong>端口映射：</strong></p>
+<ul>
+<li>必须开放的端口：<code>21115-21119</code>&#x2F;TCP和<code>21116</code>&#x2F;UDP</li>
+<li>各端口用途明确区分，便于防火墙配置</li>
+</ul>
+<p><strong>安全配置：</strong></p>
+<ul>
+<li> <code>-k_</code>参数：自动生成加密密钥，强制客户端使用密钥连接</li>
+<li>数据持久化：将密钥和配置数据挂载到本地目录 .&#x2F;rustdesk_data</li>
+</ul>
+<p> </p>
+<p><strong>健康检查：</strong></p>
+<ul>
+<li>内置健康检查脚本，确保服务正常运行</li>
+<li>30秒检查间隔，3次重试机制</li>
+</ul>
+<h2 id="三、部署执行步骤"><a href="#三、部署执行步骤" class="headerlink" title="三、部署执行步骤"></a>三、部署执行步骤</h2><p><strong>修改配置文件</strong><br>将配置文件中的”你的服务器IP或域名”替换为实际值：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动获取公网IP并替换（可选）</span></span><br><span class="line">sed -i <span class="string">&quot;s/你的服务器IP或域名/<span class="subst">$(curl -s icanhazip.com)</span>/&quot;</span> docker-compose.yml</span><br></pre></td></tr></table></figure>
+<p><strong>启动服务</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取最新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后台启动服务</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看服务状态</span></span><br><span class="line">docker compose ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看实时日志</span></span><br><span class="line">docker compose logs -f</span><br></pre></td></tr></table></figure>
+<p><strong>获取密钥</strong><br>服务启动后，需要获取生成的公钥用于客户端配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一：查看日志获取密钥</span></span><br><span class="line">docker compose logs hbbs | grep <span class="string">&quot;key:&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二：直接查看公钥文件</span></span><br><span class="line"><span class="built_in">cat</span> ./rustdesk_data/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+<p>密钥格式类似： <code>aMXQFBM+NpRIDqh0KZ7CUAXuQFxHqykAn5Fm0YqSQKM=</code><br><strong>配置防火墙</strong><br>确保服务器防火墙开放必要端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开放TCP端口21115-21119</span></span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --zone=public --add-port=21115-21119/tcp --permanent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开放UDP端口21116</span></span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --zone=public --add-port=21116/udp --permanent</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载防火墙规则</span></span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<p>如果是云服务器的话，在厂商控制台进行放开<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image.png" alt="alt text"><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image1.png" alt="alt text"></p>
+<h2 id="四、客户端配置"><a href="#四、客户端配置" class="headerlink" title="四、客户端配置"></a>四、客户端配置</h2><p><strong>Windows&#x2F;Linux&#x2F;macOS客户端：</strong><br>下载并安装RustDesk客户端<br><a target="_blank" rel="noopener" href="https://rustdesk.com/zh-cn/" title=" Rustdesk官网"> Rustdesk官网</a></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image2.png" alt="alt text"><br>点击下载会跳转到github ，根据你自己需要的版本和架构下载就好<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image3.png" alt="alt text"><br>进入设置 -&gt; 网络<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image4.png" alt="alt text"><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image5.png" alt="alt text"><br>配置以下参数：</p>
+<ul>
+<li>ID服务器：你的服务器IP或域名:21116</li>
+<li>中继服务器：你的服务器IP或域名:21117</li>
+<li>Key：从 id_ed255  19.pub 文件中获取的公钥</li>
+</ul>
+<p>我的key是自定义的，服务器是搭再局域网写教程的，所以比较草率，不要学我<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image6.png" alt="alt text"><br>到这里，需要远程的电脑都配置到之后，就可以开启远程了<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image7.png" alt="alt text"><br>也可以在软件上设置密码，使用一次性或者长期固定密码<br>在控制端输入被控端的远程代码即可远程<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image8.png" alt="alt text"></p>
+<p>好了，其他功能请自行摸索，并且，自建中继服务器支持对手机的远程操控，官方提供是不支持的，(zp太多)，谨慎使用，自己用无所谓了</p>
+<p><strong>命令行参数配置（高级）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Windows</span></span><br><span class="line">rustdesk.exe --server 你的服务器IP --port 21115 --relay 你的服务器IP:21117</span><br><span class="line"></span><br><span class="line"><span class="comment"># Linux</span></span><br><span class="line">./rustdesk --server 你的服务器IP --port 21115 --relay 你的服务器IP:21117</span><br><span class="line"></span><br><span class="line"><span class="comment"># macOS</span></span><br><span class="line">open -a RustDesk --args --server 你的服务器IP --port 21115 --relay 你的服务器IP:21117</span><br></pre></td></tr></table></figure>
+<p><strong>服务升级：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取最新镜像</span></span><br><span class="line">docker compose pull</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务（自动使用新镜像）</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前使用的镜像版本</span></span><br><span class="line">docker images | grep rustdesk-server</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/img/avatar.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/img/avatar.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">不待</div><div class="post-copyright__author_desc">Backend, AI &amp; DevOps Sharing</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/')">Docker-Compose完整部署RustDesk自建服务器</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="http://115.190.196.142/images/2025/11/22/_20251122174144_203_171.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/images/2025/11/22/_20251122174144_203_171.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="http://115.190.196.142/images/2025/11/22/_20251122174129_202_171.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="http://115.190.196.142/images/2025/11/22/_20251122174129_202_171.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div><div class="reward-link mode"><a class="reward-link-button" href="/wechat/"><i class="anzhiyufont anzhiyu-icon-plant-fill"></i>运营模式与责任</a></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=undefined&amp;url=http://example.com/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/&amp;pic=undefined" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">不待的技术栈 | 后端 & AI & 运维</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/RustDesk/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>RustDesk<span class="categoryesPageCount">1</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/linux/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>linux<span class="tagsPageCount">6</span></a><a class="post-meta__box__tags" href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>公有云<span class="tagsPageCount">4</span></a></div></div><div class="post_share"><div class="social-share" data-image="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image2.png" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2025/11/21/openstack%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%9B%E5%BB%BA%E4%BA%91%E4%B8%BB%E6%9C%BA/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">openstack平台搭建及创建云主机</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2025/11/21/openstack%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%9B%E5%BB%BA%E4%BA%91%E4%B8%BB%E6%9C%BA/" title="openstack平台搭建及创建云主机"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-11-21</div><div class="title">openstack平台搭建及创建云主机</div></div></a></div><div><a href="/2025/11/21/%E4%BA%91%E8%AE%A1%E7%AE%97%E6%AF%94%E8%B5%9B%E7%A7%81%E6%9C%89%E4%BA%91%E9%A2%98%E7%9B%AE/" title="云计算比赛私有云题目"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-11-21</div><div class="title">云计算比赛私有云题目</div></div></a></div><div><a href="/2025/11/21/%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="自建机场|科学上网"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/fly_tu1.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-11-21</div><div class="title">自建机场|科学上网</div></div></a></div><div><a href="/2025/11/21/linux-dhcp%E6%90%AD%E5%BB%BA/" title="centos搭建dhcp服务"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/pasted-4.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-11-21</div><div class="title">centos搭建dhcp服务</div></div></a></div><div><a href="/2025/11/21/linux-httpd%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/" title="linux-httpd服务配置"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/httpd_tu1.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-11-21</div><div class="title">linux-httpd服务配置</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div><div class="comment-tips" id="comment-tips"><span>✅ 你无需删除空行，直接评论以获取最佳展示效果</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">后端开发、人工智能​ 和 运维实践​ </b>原创文章、实战教程与技术观点，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">不待</h1><div class="author-info__desc">Backend, AI &amp; DevOps Sharing</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/djsindn" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="tencent://Message/?Uin=1410844974" target="_blank" title="QQ"><i class="anzhiyufont anzhiyu-icon-qq"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">今日KPI：拿下杭州offer！✨</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">Docker-Compose完整部署RustDesk自建服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E4%B8%8E%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">一、环境准备与前置条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%8C%E6%95%B4%E7%9A%84Docker-Compose%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">二、完整的Docker-Compose配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%83%A8%E7%BD%B2%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.3.</span> <span class="toc-text">三、部署执行步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">四、客户端配置</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Docker-Compose完整部署RustDesk自建服务器"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/image2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker-Compose完整部署RustDesk自建服务器"/></a><div class="content"><a class="title" href="/2025/11/21/Docker-Compose%E5%AE%8C%E6%95%B4%E9%83%A8%E7%BD%B2RustDesk%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="Docker-Compose完整部署RustDesk自建服务器">Docker-Compose完整部署RustDesk自建服务器</a><time datetime="2025-11-21T13:33:00.000Z" title="发表于 2025-11-21 21:33:00">2025-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/21/openstack%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%9B%E5%BB%BA%E4%BA%91%E4%B8%BB%E6%9C%BA/" title="openstack平台搭建及创建云主机"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="openstack平台搭建及创建云主机"/></a><div class="content"><a class="title" href="/2025/11/21/openstack%E5%B9%B3%E5%8F%B0%E6%90%AD%E5%BB%BA%E5%8F%8A%E5%88%9B%E5%BB%BA%E4%BA%91%E4%B8%BB%E6%9C%BA/" title="openstack平台搭建及创建云主机">openstack平台搭建及创建云主机</a><time datetime="2025-11-21T13:33:00.000Z" title="发表于 2025-11-21 21:33:00">2025-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/21/linux-httpd%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/" title="linux-httpd服务配置"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/httpd_tu1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux-httpd服务配置"/></a><div class="content"><a class="title" href="/2025/11/21/linux-httpd%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE/" title="linux-httpd服务配置">linux-httpd服务配置</a><time datetime="2025-11-21T13:33:00.000Z" title="发表于 2025-11-21 21:33:00">2025-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/21/python%E7%88%AC%E8%99%AB-%E6%9F%90%E7%94%B5%E5%BD%B1%E7%BD%91%E7%AB%99%E5%AE%9E%E6%88%98/" title="爬虫实战-某电影网站实战"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/pasted-5.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="爬虫实战-某电影网站实战"/></a><div class="content"><a class="title" href="/2025/11/21/python%E7%88%AC%E8%99%AB-%E6%9F%90%E7%94%B5%E5%BD%B1%E7%BD%91%E7%AB%99%E5%AE%9E%E6%88%98/" title="爬虫实战-某电影网站实战">爬虫实战-某电影网站实战</a><time datetime="2025-11-21T13:33:00.000Z" title="发表于 2025-11-21 21:33:00">2025-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/21/%E7%88%AC%E8%99%AB-%E8%B1%86%E7%93%A3top250/" title="爬虫实战-豆瓣top250"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/../images/python%E7%88%AC%E8%99%AB-%E6%9F%90%E7%94%B5%E5%BD%B1%E7%BD%91%E7%AB%99%E5%AE%9E%E6%88%98/image%20copy.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="爬虫实战-豆瓣top250"/></a><div class="content"><a class="title" href="/2025/11/21/%E7%88%AC%E8%99%AB-%E8%B1%86%E7%93%A3top250/" title="爬虫实战-豆瓣top250">爬虫实战-豆瓣top250</a><time datetime="2025-11-21T13:33:00.000Z" title="发表于 2025-11-21 21:33:00">2025-11-21</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="footer_deal"><a class="deal_link" href="mailto:anzhiyu-c@qq.com" title="email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://weibo.com/u/6378063631" title="微博"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://www.facebook.com/profile.php?id=100092208016287&amp;sk=about" title="facebook"><i class="anzhiyufont anzhiyu-icon-facebook1"></i></a><a class="deal_link" href="/atom.xml" title="RSS"><i class="anzhiyufont anzhiyu-icon-rss"></i></a><img class="footer_mini_logo" title="返回顶部" alt="返回顶部" onclick="anzhiyu.scrollToDest(0, 500)" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/img/avatar.jpg" size="50px"/><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/372204786" title="Bilibili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/DwCpMEy/" title="抖音"><i class="anzhiyufont anzhiyu-icon-tiktok"></i></a><a class="deal_link" href="/copyright" title="CC"><i class="anzhiyufont anzhiyu-icon-copyright-line"></i></a></div><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/foolter/budai_moyu.svg" alt="上班时间偷偷来看看博客~" title="上班时间偷偷来看看博客~"/><div id="runtimeTextTip"></div></div><div class="footer_custom_text">本站使用AnZhiYu主题构建 &#183; 由Budai维护与运营 &#183; 欢迎交流与合作</div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title="博客框架为Hexo_v5.4.0"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Frame-Hexo.svg" alt="博客框架为Hexo_v5.4.0"/></a><a class="github-badge" target="_blank" href="https://hexo.anheyu.com/" style="margin-inline:5px" data-title="本站使用AnZhiYu主题" title="本站使用AnZhiYu主题"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.9/img/Theme-AnZhiYu-2E67D3.svg" alt="本站使用AnZhiYu主题"/></a><a class="github-badge" target="_blank" href="https://www.dogecloud.com/" style="margin-inline:5px" data-title="本站使用多吉云为静态资源提供CDN加速" title="本站使用多吉云为静态资源提供CDN加速"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/CDN-多吉云-3693F3.svg" alt="本站使用多吉云为静态资源提供CDN加速"/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/Copyright-BY-NC-SA.svg" alt="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"/></a></p></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 By <a class="footer-bar-link" href="/" title="不待" target="_blank">不待</a></div></div><div id="footer-type-tips"></div><div class="js-pjax"><script>function subtitleType () {
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      if (true) {
+        const from = '出自 ' + data.from
+        const sub = ["生活明朗&#44; 万物可爱&#44; 人间值得&#44; 未来可期."]
+        sub.unshift(data.hitokoto, from)
+        window.typed = new Typed('#footer-type-tips', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: true,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('footer-type-tips').innerHTML = data.hitokoto
+      }
+    })
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.cbd.int/typed.js@2.1.0/dist/typed.umd.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}
+</script></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="AnZhiYu Theme">AnZhiYu Theme</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://blog.budai.fun/" title="Budai Blog">Budai Blog</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="Hexo">Hexo</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">8</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.budai.fun/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="http://115.190.196.142/upload" title="不待图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/images/avatar.jpg" alt="不待图床"/><span class="back-menu-item-text">不待图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友情链接</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 工具</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/image-watermark/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 图片水印</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/httpd/" style="font-size: 0.88rem;">httpd<sup>1</sup></a><a href="/tags/linux/" style="font-size: 0.88rem;">linux<sup>6</sup></a><a href="/tags/python/" style="font-size: 0.88rem;">python<sup>2</sup></a><a href="/tags/requests/" style="font-size: 0.88rem;">requests<sup>1</sup></a><a href="/tags/vpn/" style="font-size: 0.88rem;">vpn<sup>1</sup></a><a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/" style="font-size: 0.88rem;">云计算<sup>4</sup></a><a href="/tags/%E5%85%AC%E6%9C%89%E4%BA%91/" style="font-size: 0.88rem;">公有云<sup>4</sup></a><a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 0.88rem;">爬虫<sup>2</sup></a></div></div><hr/></div></div><div id="keyboard-tips"><div class="keyboardTitle">博客快捷键</div><div class="keybordList"><div class="keybordItem"><div class="keyGroup"><div class="key">shift K</div></div><div class="keyContent"><div class="content">关闭快捷键功能</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift A</div></div><div class="keyContent"><div class="content">打开/关闭中控台</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift M</div></div><div class="keyContent"><div class="content">播放/暂停音乐</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift D</div></div><div class="keyContent"><div class="content">深色/浅色显示模式</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift S</div></div><div class="keyContent"><div class="content">站内搜索</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift R</div></div><div class="keyContent"><div class="content">随机访问</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift H</div></div><div class="keyContent"><div class="content">返回首页</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift F</div></div><div class="keyContent"><div class="content">友链鱼塘</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift L</div></div><div class="keyContent"><div class="content">友链页面</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift P</div></div><div class="keyContent"><div class="content">关于本站</div></div></div><div class="keybordItem"><div class="keyGroup"><div class="key">shift I</div></div><div class="keyContent"><div class="content">原版/本站右键菜单</div></div></div></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>转为繁体</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("022/05/2022 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.15",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 不待 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("022/05/2022 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "/images/foolter/budai_xiaban.svg";
+        img.title = "下班了，放松放松~";
+        img.alt = "下班了，放松放松~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(() => {
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'http://115.190.196.142:8080/',
+      region: '',
+      onCommentLoaded: () => {
+        anzhiyu.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(runFn,0)
+    else getScript('https://cdn.cbd.int/twikoo@1.6.44/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'http://115.190.196.142:8080/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const runFn = () => {
+    init();
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else {
+      loadTwikoo()
+    }
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js"></script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="/css/custom.css"><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:type\"]","meta[property=\"og:site_name\"]","meta[property=\"og:description\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/about/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>

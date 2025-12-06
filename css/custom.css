@@ -1,6 +1,6 @@
 /* 侧边栏头像卡片 */
 #aside-content>.card-widget.card-info::before {
-  background: url('http://115.190.196.142/i/2025/11/25/69255b933303e.png');
+  background: url('../images/bg/right-img.png');
   border: 0;
   position: absolute;
   background-size: 100% 100%;
@@ -12,7 +12,7 @@
 /* 白天网站背景/颜色 */
 /* 白天网站背景/颜色 */
 #web_bg {
-    background: url('http://115.190.196.142/i/2025/11/25/6925617debe17.png');
+    background: url('../images/bg/light_bg.png');
     background-size: cover;  /* 改为cover确保完全覆盖 */
     background-repeat: no-repeat;
     background-position: center;
@@ -21,7 +21,7 @@
 
 /* 夜间网站背景/颜色 */
 [data-theme=dark] #web_bg {
-    background: url('http://115.190.196.142/i/2025/11/25/6925615233900.png');
+    background: url('../images/bg/dark_bg.png');
     background-size: cover;  /* 同样改为cover */
     background-repeat: no-repeat;
     background-position: center;
